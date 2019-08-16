@@ -8,34 +8,38 @@ export default ({activity, includeHyperlinks}) => {
     const compareSegments = activity.hasSegments ? <Link className='m-r-2' to={compareSegmentsLink}>Compare Segments</Link> : undefined
     const routeProfileLink = '/routeProfile/' + activity.id
     const routeProfile = activity.hasSegments ? <Link className='m-r-2' to={routeProfileLink}>3D Route Profile</Link> : undefined
-    const Checkbox = props => (
-        <input type="checkbox" {...props} />
-      )
     return <div className='m-b-3'>
         <Row>
-            <label>
-                <Checkbox
-                />
-                <span>{activity.startDate.toDateString()} - {Math.floor(activity.distance/100)/10} km - {Math.floor(activity.averageSpeed*10)/10} kmph</span>
-                </label>
-
-            {/* <Col xs={10}>{activity.startDate.toDateString()}</Col> */}
-                {/* <table className='table-bordered'>
-                    <thead>
-                        <th width="0"><span className='m-r'><em>Date</em></span></th>
-                        <th width="0"><span className='m-r'><em>Distance</em></span></th>
-                        <th width="0"><span className='m-r'><em>Avg Speed</em></span></th>
-                    </thead>
+            <Col xs={12}>
+                <TitleLabel text={activity.name} subtitle={activity.startDate.toDateString() + ' (' + activity.type + ')'} className='m-b' />
+                <table>
                     <tbody>
                         <tr>
-                            <td width="0"><span className='m-r'>{activity.startDate.toDateString()}</span></td>
+                            <td width="0"><span className='m-r'><em>Distance</em></span></td>
                             <td width="0"><span className='m-r'>{Math.floor(activity.distance/100)/10} km</span></td>
+                            <td width="0"><span className='m-r'><em>Elapsed Time</em></span></td>
+                            <td width="0"><span className='m-r'>{Math.floor(activity.elapsedTime/60)} minutes</span></td>
+                            <td className="m-r-2"><span className='m-r'><em>Type</em></span></td>
+                            <td>{activity.type}</td>
+                        </tr>
+                        <tr>
+                            <td width="0"><span className='m-r'><em>Avg Speed</em></span></td>
                             <td width="0"><span className='m-r'>{Math.floor(activity.averageSpeed*10)/10} kph</span></td>
+                            <td width="0"><span className='m-r'><em>Max Speed</em></span></td>
+                            <td>{Math.floor(activity.maxSpeed*10)/10} kph</td>
+                            <td className="m-r-2"><span className='m-r'><em>Trainer</em></span></td>
+                            <td>{activity.trainer}</td>
                         </tr>
                     </tbody>
-                </table> */}
-            {/* <Col xs={10}>{Math.floor(activity.distance/100)/10} km</Col> */}
-            {/* <Col xs={10}>{Math.floor(activity.averageSpeed*10)/10} kmph</Col> */}
+                </table>
+                {!includeHyperlinks ? undefined :
+                    <div className="m-t">
+                        {compareSegments}
+                        {routeProfile}               
+                    </div>
+                }
+            </Col>
         </Row>
+        <hr/>
     </div>
 }
