@@ -18,13 +18,14 @@ const saveDemoData = process.env.saveDemoData === 'true'
 const getFilenameFromUrl = (url) => path.join(__dirname, '/demodata/' + url.replace(/[\/\?=]/g, '_').substring(1) + '.json')
 
 const proxyConfiguration = {
-    decorateRequest: function(proxyReq, originalReq) {
+    proxyReqOptDecorator: function(proxyReq, originalReq) {
         for(const headerName in originalReq.headers) {
             // exclude the host header to prevent certificate chain issues
             if (headerName.toLowerCase() !== 'host') {
                 proxyReq.headers[headerName] = originalReq.headers[headerName]
             }            
         }
+        return proxyReq;
     },
     filter: function(req, res) {
         console.log('main response ::: ' + res.toString)
